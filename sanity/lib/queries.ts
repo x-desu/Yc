@@ -17,7 +17,8 @@ export const STARTUP_QUERY = defineQuery(`
     views,
     description,
     category,
-    image
+    image,
+    likes
 }`)
 
 export const STARTUP_BY_ID_QUERY = defineQuery(`
@@ -37,7 +38,8 @@ export const STARTUP_BY_ID_QUERY = defineQuery(`
     description,
     category,
     image,
-    pitch
+    pitch,
+    likes
 }
   `)
 

@@ -31,6 +31,11 @@ export const author = defineType({
             name:'bio',
             type:'text'
         }),
+        defineField({
+            name:'liked',
+            type:'array',
+            of:[{type:'reference',to:[{type:'startup'}]}]
+        }),
     ],
     preview:{
         select:{

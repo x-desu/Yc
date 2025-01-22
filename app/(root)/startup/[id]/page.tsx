@@ -8,19 +8,23 @@ import { Suspense } from 'react'
 import { Skeleton } from "@/components/ui/skeleton"
 import View from "@/components/View"
 import StartupCard, { StartupTypeCard } from "@/components/StartupCard"
+import Like from "@/components/Like"
+import { auth } from "@/auth"
+import { toast } from "@/hooks/use-toast"
 
 const md = markdownit()
 export const experimental_ppr = true
 
 const StartUpPage = async({params}:{params:Promise<{id:string}>}) => {
     const {id} = await params
-
+    const session = await auth()
     const [post,{select:editorPosts}] = await Promise.all([
         client.fetch(STARTUP_BY_ID_QUERY,{id}),
         await client.fetch(PLAYLIST_BY_SLUG_QUERY,{slug:'editor-picks'})
     ])
    
     if(!post) return notFound()
+        console.log(post)
 
     const parsedContent = md.render(post?.description)
 
@@ -71,6 +75,9 @@ const StartUpPage = async({params}:{params:Promise<{id:string}>}) => {
                 ):<p className="no-result">
                     No details provided
                 </p>}
+            <div className="flex justify-end">
+                <Like id={id} authorId={session?.id} />
+            </div>
             </div>
 
             <hr className="divider"/>
